@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Header from "./Components/Layout/Header";
 import Sidebar from "./Components/Layout/Sidebar";
+import Dashboard from "./Components/Dashboard/Dashboard";
 
 const App = () => {
   const [sideBarCollapsed, setSideBarCollapsed] = useState(false);
@@ -10,12 +11,20 @@ const App = () => {
       <div className="flex h-screen overflow-hidden">
         <Sidebar
           collapsed={sideBarCollapsed}
-          onToggle={() => setSideBarCollapsed}
+          onToggle={() => setSideBarCollapsed(!sideBarCollapsed)}
           currentPage={currentPage}
           onPageChange={setCurrentPage}
         />
         <div className="flex-1 flex flex-col overflow-hidden">
-          <Header />
+          <Header
+            sideBarCollapsed={sideBarCollapsed}
+            onToggleSidebar={() => setSideBarCollapsed(!sideBarCollapsed)}
+          />
+          <main className="flex-1 overflow-y-auto bg-transparent">
+            <div className="p-6 space-y-6">
+              {currentPage === "dashboard" && <Dashboard />}
+            </div>
+          </main>
         </div>
       </div>
     </div>
